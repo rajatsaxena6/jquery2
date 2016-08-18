@@ -1,0 +1,57 @@
+/*
+#table1,th,td{
+	border-color: blue;
+	border-style: solid;
+	border:1px solid black;
+
+}
+#table1{
+	margin-top: 50px;
+	width: 100%;
+}
+*/
+
+/* CSS for test.html
+
+*/
+#frm1{
+
+margin-top: 50px;
+
+}
+/*#addbutton{
+	margin-top: 20px;
+	margin-left: 450px;
+}*/
+#text1{
+
+	width: 50%;
+	margin:auto;
+}
+
+table tr .edit{
+	display: none;
+
+}
+
+table tr.edit .edit{
+	display: initial;
+}
+
+table tr.edit .noedit{
+	display: none;
+}
+
+#row1{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#pages{
+	background-color: green;
+	}
+
+#wrap{
+	background:url(../images/flow.jpg);
+	
+}

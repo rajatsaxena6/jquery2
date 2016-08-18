@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bank DataBase</title>
+    <!-- Bootstrap -->
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+</head>
+
+<body>
+    <div class="container-fluid" id="wrap" >
+        <h1 align="center">
+        Bank Customers Database
+      </h1>
+        <form class="navbar-form" id="frm1" action="">
+            <center>
+                <input type="text" class="form-control" placeholder="Search the name" id="text1">
+                <button class="btn btn-default" type="button" id="button1"><span class="glyphicon glyphicon-search"></span>
+                </button>
+            </center>
+        </form>
+        <div class="row">
+            <div id="two" align="center">
+                <button class="btn btn-primary" id="addbutton" data-toggle="modal" data-target="#mymodal">Add</button>
+                <!--Modal-->
+                <div class="modal fade" id="mymodal" role="dialog">
+                    <div class="modal-dialog">
+                        <!--modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Please enter the details</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal" id="frm2">
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="inputName">Name</label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control" id="inputName" placeholder="Name" type="text" required onblur="nameFunction(this.value)">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="inputEmail">Email</label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control" id="inputEmail" placeholder="Email" type="text" required onblur="emailFunction(this.value)">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="inputphonenumber">Phone Number</label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control" id="inputphno" placeholder="phonenumber" type="text" required onblur="phoneFunction(this.value)">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label" for="inputAccounttype">Account Type</label>
+                                        <div class="col-lg-10">
+                                        <select id="inputaccounttype" class="form-control" onblur="accountFunction(this.value)">
+                                          <option>Please Choose</option>
+                                          <option>Money Market Account</option>
+                                          <option>Credit Card Account</option>
+                                          <option>Auto Loan Account</option>
+                                          <option>Personal Loan Account</option>
+                                          <option>Investment Account</option>
+                                          <option>Checking Account</option>
+                                          <option>Home Loan Account</option>
+                                          <option>Savings Account</option>
+                                        </select>
+                                            <!-- <input class="form-control" id="inputaccounttype" placeholder="Account Type" type="text" required onblur="accountFunction()"> -->
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-success" data-dismiss="modal" id="added" type="submit">Submit
+                                </button>
+                                <button class="btn btn-danger" data-dismiss="modal" id="closed" type="button">Close
+                                </button>
+
+                              </form>  <!--end form-->
+
+                            </div>
+                            <!--end modal body-->
+                            <!-- <div class="modal-footer">
+                                
+                                  
+                            </div> -->
+
+                            <!--end modal footer-->
+                        </div>
+                        <!--end modal content-->
+                    </div>
+                    <!--end modal dialog-->
+                </div>
+                <!--end my modal-->
+                <button class="btn btn-success" id="viewbutton">ViewAll</button>
+            </div>
+        </div>
+        <hr>
+        <div class="row" id="row1">
+            <div class="col-12">
+               <div class ="table-responsive">
+                    <table class="table table-bordered tb" id="tab01">
+                        <thead>
+                        <tr id="thead">
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phonenumber</th>
+                            <th>AccountType</th>
+                            <th>Operation</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbdy">
+                        <template id="tmp">
+                            <tr class="table-bordered" data-id="{{id}}">
+                                <td>{{id}}</td>
+                                <td><span class="noedit name">{{name}}</span>
+                                    <input class="edit name" />
+                                </td>
+                                <td><span class="noedit email">{{email}}</span>
+                                    <input class="edit email" />
+                                </td>
+                                <td><span class="noedit phonenumber">{{phonenumber}}</span>
+                                    <input class="edit phonenumber" />
+                                </td>
+                                <td><span class="noedit accountname">{{accountname}}</span>
+                                    <select class="edit accountname">
+                                    <option>Please Choose</option>
+                                    <option>Money Market Account</option>
+                                    <option>Credit Card Account</option>
+                                    <option>Auto Loan Account</option>
+                                    <option>Personal Loan Account</option>
+                                    <option>Investment Account</option>
+                                    <option>Checking Account</option>
+                                    <option>Home Loan Account</option>
+                                    <option>Savings Account</option>
+                                    </select>
+                                   <!--  <input class="edit accountname" />
+                                -->
+                                </td>
+                                <td>
+                                    <button class="editorder noedit" data-toggle="tooltip" data-placement="auto" title="Edit" data-id="{{id}}up"><span class="glyphicon glyphicon-pencil"></span></button>
+                                    <button class="saveedit edit">Save</button>
+                                    <button class="canceledit edit">Cancel</button>
+                                    <button class="remove" data-id="{{id}}" data-toggle="tooltip" data-placement="auto" title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
+                                </td>
+                            </tr>
+                        </template>
+                        </tbody>
+                    </table>
+               </div>
+            </div>
+        </div>
+        <!--end row-->
+        <div class="row" id="pages">
+        <div align="center" id="page">
+
+         <h3>
+          This is the footer.
+        </h3> 
+        
+        
+            <!-- <nav aria-label="Page navigation">
+
+            
+                <ul class="pagination">
+                    <li>
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="active"><a href="#" >1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav> -->
+        </div> <!--end footer-->
+        </div>
+        
+    </div>
+    <!--end container-->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/mustche.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <!--custom js-->
+    <script src="js/application.js"></script>
+</body>
+
+</html>
