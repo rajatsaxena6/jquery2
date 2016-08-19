@@ -3,6 +3,8 @@ $(document).ready(function() {
     $('#pages').hide();
     $('[data-toggle="tooltip"]').tooltip();
     var template = $('#tmp').html();
+    var viewflag = true;
+    var filterflag = true;
 
     // Searching..
     $('#button1').click(function() {
@@ -46,9 +48,10 @@ $(document).ready(function() {
         });
 
     });
+
     //View All..	
-  
-    $('#viewbutton').on('click', function() {
+  $('#viewbutton').on('click', function() {
+        viewflag = false;
         $('#tbdy').empty();
         alert("all?");
 
@@ -70,7 +73,7 @@ $(document).ready(function() {
 
     //Adding..
     $('#added').click(function() {
-
+    	$('#tbdy').empty();
         var $name = $('#inputName').val();
         var $email = $('#inputEmail').val();
         var $phno = $('#inputphno').val();
@@ -98,7 +101,7 @@ $(document).ready(function() {
                             data: obj,
                             success: function(newdata) {
 
-                                $('#tab01').append(Mustache.render(template, newdata));
+                                $('#tbdy').append(Mustache.render(template, newdata));
                             },
                             error: function() {
                                 alert("Error Saving the data!");
@@ -191,22 +194,21 @@ $(document).ready(function() {
     //Infinite Scrolling
     var page = 3;
     $(window).scroll(function() {
+    	
+    		var $wrap = $('#wrap');
+			var contentHeight = wrap.offsetHeight;	
+			var yOffset = window.pageYOffset;
+			var y = yOffset + window.innerHeight;
+    			
+    		
 
+			
+			if (y >= contentHeight) {
+				if(!viewflag){
 
-        var $wrap = $('#wrap');
-      //  var tt = $('#tmp').html();
-        var contentHeight = wrap.offsetHeight;
-
-        var yOffset = window.pageYOffset;
-
-        var y = yOffset + window.innerHeight;
-
-
-        if (y >= contentHeight) {
-
-            $.ajax({
+			$.ajax({
                 type: 'GET',
-                url: 'http://localhost:8080/people/?&_page=' + page,
+                url: 'http://localhost:8080/people/?&_page='+page,
                 success: function(d) {
                     $.each(d, function(i, itm) {
                         $('#tbdy').append(Mustache.render(template, itm));
@@ -220,7 +222,50 @@ $(document).ready(function() {
                     console.log("error loading");
                 }
             });
+        	}
+        	 if(!filterflag){
+
+        	$.ajax({
+    		type: 'GET',
+    		url: 'http://localhost:8080/people?&_sort=name&_page='+page,
+    		success: function(filterdata) {
+    			$.each(filterdata,function(i,filter){
+
+    				$('#tbdy').append(Mustache.render(template,filter));
+    			});
+    			page = page + 1;
+    		},
+    		error: function(){
+    			console.log("error filtering");
+    		}
+    	});
+			}
         }
+       
+
+
+        
+    });
+
+    //Filter
+    $('#filterbutton').on('click',function(){
+    	filterflag = false;
+
+    	$('#tbdy').empty();
+    	$.ajax({
+    		type: 'GET',
+    		url: 'http://localhost:8080/people?&_sort=name&_limit=20',
+    		success: function(filterdata) {
+    			$.each(filterdata,function(i,filter){
+
+    				$('#tbdy').append(Mustache.render(template,filter));
+    			});
+    		},
+    		error: function(){
+    			console.log("error filtering");
+    		}
+    	});
+
     });
 
 
