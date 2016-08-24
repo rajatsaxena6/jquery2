@@ -1,39 +1,42 @@
-<!DOCTYPE html>
-<html>
+<html ng-app='app1' ng-init = "person = { Name:'Rajat',Lname:'Saxena'}; capitals=[{city:'Shimla',state:'Himachal Pradesh'},{city:'Chandigarh',state:'Punjab'}]">
 <head>
-	<title>My Employee Databases</title>
-	<script type="text/javascript">
-	function yHandler(){
-		var wrap = document.getElementById('wrap');
-		//get page content height
-		var contentHeight = wrap.offsetHeight;
-		//get vertical scroll position
-		var yOffset = window.pageYOffset;
-		var y = yOffset + window.innerHeight;
-		if(y >= contentHeight){
-			wrap.innerHTML += '<div class="newData"></div>';
-			//ajax call to get more data goes here
+ <title>My angular</title>
+  </head>
+   
+   <body>
+   <div ng-controller="ctrl1">
 
-		}
-		var status = document.getElementById('status');
-		status.innerHTML = contentHeight+" | "+y;
+<span> Values:</span>
+<input type="text" ng-model="first" />
+<input type="text" ng-model="second" />
 
-}
-		window.onscroll = yHandler;
-	
-	</script>
-	<style type="text/css">
-		div#status{position: fixed;font-size: 24px;}
-		div#wrap{width: 800px;margin:0 auto;}
-		div.newData{height: 1000px;background: #09F; margin: 10px 0px;}
-	</style>
-</head>
-<body>
-<div id="status">0 | 0 </div>
-<div id="wrap"><img src="car1.jpg"></div>
+<button ng-click="updateValue()">Sum
+</button>
 
+<br><br>
+{{calculation}}
 
+<p> Your first value is {{first}} </p>
+<p> Your second value is 
+<span data-ng-bind="second">
+</span>
+</p>
 
+<p> {{person.Name + " " + person.Lname}} you entered {{first + " and "+ second}}
+</p>
 
-</body>
-</html>
+<ul>
+<li ng-repeat="capital in capitals">
+{{'City:' +capital.city + ',State:'+ capital.state}}
+</li>
+</ul>
+   </div>
+
+    
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.js"> </script>
+    <script src="app.js"> </script>
+    </body>
+    
+    
+ </html>
