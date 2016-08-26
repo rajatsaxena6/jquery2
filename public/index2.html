@@ -15,7 +15,8 @@
         <form class="navbar-form" id="frm1" action="">
             <center>
                 <input type="text" class="form-control" placeholder="Search the name" id="text1" ng-model="searchvalue">
-                <button class="btn btn-default" type="button" id="button1" ng-click="searchclick()"><span class="glyphicon glyphicon-search">
+                <button class="btn btn-default" type="button" id="button1" ng-click="searchclick()">
+                <span class="glyphicon glyphicon-search">
                     
                 </span>
                 </button>
@@ -38,40 +39,34 @@
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="inputName">Name</label>
                                         <div class="col-lg-10">
-                                            <input class="form-control" id="inputName" placeholder="Name" type="text" required ng-model="name">
+                                            <input class="form-control" id="inputName" placeholder="Name" type="text" required ng-model="bank.name">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="inputEmail">Email</label>
                                         <div class="col-lg-10">
-                                            <input class="form-control" id="inputEmail" placeholder="Email" type="email" required ng-model="email">
+                                            <input class="form-control" id="inputEmail" placeholder="Email" type="email" required ng-model="bank.email">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="inputphonenumber">Phone Number</label>
                                         <div class="col-lg-10">
-                                            <input class="form-control" id="inputphno" placeholder="phonenumber" type="number" required ng-model="phonenumber">
+                                            <input class="form-control" id="inputphno" placeholder="phonenumber" type="number" required ng-model="bank.phonenumber">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label" for="inputAccounttype">Account Type</label>
                                         <div class="col-lg-10">
-                                        <select id="inputaccounttype" class="form-control" ng-model="accounttype" required>
-
-                                          <option>Please Choose</option>
-                                          <option>Money Market Account</option>
-                                          <option>Credit Card Account</option>
-                                          <option>Auto Loan Account</option>
-                                          <option>Personal Loan Account</option>
-                                          <option>Investment Account</option>
-                                          <option>Checking Account</option>
-                                          <option>Home Loan Account</option>
-                                          <option>Savings Account</option>
+                                        <select id="inputaccounttype" class="form-control" ng-model="bank.accountname" required>
+                                        
+                                        <option ng-repeat="option in options">{{option}}</option>
+                                          
+                                        
                                         </select>
                                             
                                         </div>
                                     </div>
-                                    <button class="btn btn-success" data-dismiss="modal" id="added" type="submit" ng-click="addForm.$valid&&submitclick(name,email,phonenumber,accounttype)">Submit
+                                    <button class="btn btn-success" data-dismiss="modal" id="added" type="submit" ng-click="addForm.$valid&&submitclick(bank)">Submit
                                 </button>
                                 <button class="btn btn-danger" data-dismiss="modal" id="closed" type="button">Close
                                 </button>
@@ -102,48 +97,42 @@
             <div class="col-12">
                 <div class="table-responsive">
                     <table class="table table-bordered tb" id="tab01">
-                        <thead>
+                        <thead >
                             <tr id="thead">
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phonenumber</th>
-                                <th>AccountType</th>
-                                <th>Operation</th>
+                                <th ng-repeat="(key,val) in peopledata[0]">
+                                {{key}}
+                                </th>
                             </tr>
                         </thead>
-                        <tbody id="tbdy" ng-repeat=" x in peopledata ">
+                        <tbody id="tbdy">
                             <!-- <template id="tmp"> -->
-                                <tr class="table-bordered" data-id="{{x.id}}" >
-                                    <td>{{x.id}}</td>
-                                    <td><span class="noedit name">{{x.name}}</span>
-                                        <input class="edit name" />
-                                    </td>
-                                    <td><span class="noedit email">{{x.email}}</span>
-                                        <input class="edit email" />
-                                    </td>
-                                    <td><span class="noedit phonenumber">{{x.phonenumber}}</span>
-                                        <input class="edit phonenumber" />
-                                    </td>
-                                    <td><span class="noedit accountname">{{x.accountname}}</span>
-                                        <select class="edit accountname">
-                                            <option>Please Choose</option>
-                                            <option>Money Market Account</option>
-                                            <option>Credit Card Account</option>
-                                            <option>Auto Loan Account</option>
-                                            <option>Personal Loan Account</option>
-                                            <option>Investment Account</option>
-                                            <option>Checking Account</option>
-                                            <option>Home Loan Account</option>
-                                            <option>Savings Account</option>
+                                <tr class="table-bordered" data-id="{{x.id}}" ng-repeat="x in peopledata" >
+                                   
+                                   <td><span class="noedit accountname" >{{x.accountname}}</span>
+                                        <select class="edit accountname" ng-show="active==x" ng-model="master.accountname">
+                                        
+                                        <option ng-repeat="option in options">{{option}}</option>
                                         </select>
-                                        <!--  <input class="edit accountname" />
-                                -->
+                                        
                                     </td>
+
+                                    <td><span class="noedit email" >{{x.email}}</span>
+                                        <input class="edit email" ng-show="active==x" ng-model="master.email" placeholder="{{x.email}}" />
+                                    </td>
+                                   
+                                        <td>{{x.id}}</td>
+                                     <td> <span class="noedit name">{{x.name}}</span>
+                                        <input class="edit name" ng-show="active==x" ng-model="master.name" placeholder="{{x.name}}"/>
+                                    </td>
+                                    
+                                    <td><span class="noedit phonenumber" >{{x.phonenumber}}</span>
+                                        <input class="edit phonenumber" ng-show="active==x" ng-model="master.phonenumber" placeholder="{{x.phonenumber}}"/>
+                                    </td>
+                                    
                                     <td>
-                                        <button class="editorder noedit" data-toggle="tooltip" data-placement="auto" title="Edit" data-id="{{x.id}}up"><span class="glyphicon glyphicon-pencil"></span></button>
-                                        <button class="saveedit edit">Save</button>
-                                        <button class="canceledit edit">Cancel</button>
+                                        <button class="editorder noedit" data-toggle="tooltip" data-placement="auto" title="Edit" data-id="{{x.id}}up" ng-click="showEditRow(x)"><span class="glyphicon glyphicon-pencil"></span></button>
+                                        <button class="saveedit edit" ng-show="active==x" ng-click="update(master,x.id)">Save</button>
+                                        <button class="canceledit edit"  ng-show="active==x" ng-click="showEditRow(master)">Cancel</button>
                                         <button class="remove" data-id="{{x.id}}" data-toggle="tooltip" data-placement="auto" title="Delete" ng-click="deleteclick($index)" ng-model="userid"><span class="glyphicon glyphicon-trash"></span></button>
                                     </td>
                                 </tr>
@@ -152,6 +141,12 @@
                     </table>
                 </div>
             </div>
+        </div>
+        <div>
+        <button class="btn btn-primary pull-left" ng-hide="hidden" ng-click="prev()">Previous 
+        </button>
+        <button class="btn btn-danger pull-right" ng-hide="hidden" ng-click="next()">Next 
+        </button>
         </div>
     </div>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.js">
